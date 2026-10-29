@@ -1,0 +1,101 @@
+---
+description: Insulens phone app and clickable prototype. Apple Health / Fitness structure and Strava-style data presentation and charts, in the Insulens visual style. Use when building any app screen, chart or prototype component.
+globs: insulense-landing/components/prototype/**,insulense-landing/app/prototype/**
+alwaysApply: false
+---
+
+# Insulens app feel: Apple + Strava
+
+The prototype should feel like a native iPhone app (Apple Health, Fitness, Stocks) with Strava's clear way of showing data. Colours, fonts and the no-shadow rule still come from `.cursor/rules/visual-style.mdc`.
+
+- **From Apple:** structure, navigation, sheets, lists, charts you can scrub, and calm plain-language summaries.
+- **From Strava:** stat rows, stacked charts on a shared time axis, range bars, and a feed where each entry shows its result.
+- **Not from Strava:** kudos, badges, leaderboards, streak pressure or any social layer. The brief says the app must not feel game-like.
+
+## Structure and navigation (Apple)
+
+- **Tab bar:** Today · Log · Notes. Log is the centre action, a 56px warm-apricot circle with a `+` (like Strava's record button) that opens the Log sheet. Labels are always visible and tap targets are at least 44px.
+- **Logo:** wordmark with a small range-OK green status dot when glucose is in range; the dot turns low-glucose red in the urgent-low demo.
+- **Profile and settings:** opened from an avatar at the top right of the Today title, as in Apple Health. Not a tab.
+- **Large titles:** 32px Outfit 600, left-aligned, collapsing into a 17px centred title on scroll, with a 1px rule appearing under the bar.
+- **Sheets:** a grabber and two heights (half and full). Drag down or press Escape to close. The page behind dims to 40% ink, with no blur.
+- **Settings:** grouped inset lists. Rows are 52px with a leading icon, label, trailing value and chevron. Separators are 1px and start after the icon.
+- **Segmented control for time ranges:** Day · Week · 2 Weeks · Month · 3 Months. Two weeks is the clinical standard report period, and three months matches the HbA1c (long-term average) window.
+- **Drill-down:** tapping a summary card opens its detail screen (big chart, range control, "Show all data" list, a short "About this" text). Back gestures and buttons return you to the same scroll position.
+- **Status bar and safe areas:** the phone frame shows an iOS status bar. Content respects top and bottom safe areas.
+
+## Numbers (Apple Health + Strava)
+
+- **The value is the hero:** the number is large and its unit sits small beside it in muted text. The label sits above, small and muted. Every number has a unit or label.
+- **Current glucose:** 64px Outfit 500 `tabular-nums`, unit in 17px Albert Sans, a trend arrow, and "2 min ago" underneath.
+- **Card values:** 28px Outfit 500, unit in 15px. Stat-row values: 22px Outfit 500, label in 13px.
+- **Stat row (Strava):** three label-over-value pairs separated by 1px vertical rules: "Average 6.8 mmol/L | In range 82% | Lows 1".
+- **Comparisons are words plus a number:** "0.4 mmol/L lower than last week". Never a bare "+0.4".
+- **Changing values roll** to their new number (React Bits Count Up), 300ms, with motion off under `prefers-reduced-motion`.
+
+## Charts
+
+**Look:**
+
+- No chart border, no legend when a direct label fits, and at most 3 thin horizontal grid lines in the border colour.
+- Y labels sit on the right (as in Apple's charts). X labels are sparse: 00 · 06 · 12 · 18.
+- The glucose line is 2px with round joins. In light mode it's in the heading colour over a range-OK green target band (3.9–10.0 mmol/L). In dark mode the line uses apricot or light ink and the band stays a soft range green.
+- Low readings use the low-glucose red on the line segment and as a marker, with a text label.
+- No gradients, glows, 3D, pies or donuts.
+
+**Scrubbing (Apple Stocks / Health):**
+
+- Press and drag on a chart to get a vertical rule and a dot at the nearest reading.
+- The chart header swaps from the current value to the scrubbed one, e.g. "7.4 mmol/L · 13:20". Releasing returns it to now.
+- This works with mouse, touch and keyboard (arrow keys step through readings).
+
+**Stacked charts (Strava activity detail):**
+
+- Glucose on top, then insulin doses as thin lollipops, then carbs as bars, all sharing one time axis.
+- Scrubbing one moves the rule on all three. With shadcn/Recharts, use a shared `syncId`.
+
+**Context lane:**
+
+- Under the glucose chart, a row of small icons at the time each note was logged (food, activity, sleep, stress).
+- Tapping one highlights that stretch of the chart and opens the note.
+
+**Range bars (Strava heart-rate zones):**
+
+- Time in range is shown as horizontal bars, one per range (very low, low, in range, high, very high), each with a percentage and a duration: "In range · 82% · 19 h 41 min".
+
+**Week view (Strava weekly progress):**
+
+- Seven columns showing each day's time in range. Today is outlined, and tapping a day opens it.
+
+**Motion:**
+
+- The line draws in once on first view. Switching range morphs the data over 300ms ease-out instead of redrawing.
+
+**Sparse data:**
+
+- With fewer than 3 days of data, show the chart with an honest empty state ("Not enough data for a weekly view yet. Keep your sensor on and check back on Friday."), not a fake line.
+
+## Notes feed (Strava activity feed)
+
+- **Each note is a card:** a category icon and label, the time, and the note text. Below that, a stat row with "At the time 6.1 mmol/L", "2 h later 8.9 mmol/L" and "Peak 9.4", plus a mini sparkline of the 3 hours around it.
+- **Grouping:** by day, with a sticky day header ("Today", "Yesterday", "Mon 26 Oct").
+- **Swipe actions:** swipe left on a card to edit or delete, with Delete asking for confirmation.
+
+## Highlights and AI insights (Apple Health Highlights)
+
+- **Format:** a short plain sentence, a small comparison chart (this week vs last week as two bars, or a highlighted stretch of the day), and a footnote saying what it's based on: "Based on 14 days and 9 notes".
+- **Content:** patterns, not advice. "Your glucose rose more after dinners you logged as late." Never insulin amounts, dose changes or diagnoses.
+- **Actions:** each insight offers "Show the days" and "Add to doctor summary".
+
+## Feel
+
+- **Press feedback:** pressed controls scale to 0.97 for 100ms.
+- **Transitions:** sheets and screen pushes use a gentle spring (about 350ms, no bounce on sheets), and tab switches crossfade.
+- **Category colour:** categories are told apart by icon and label, not colour. Apricot marks primary actions, range green marks in-range / okay, and red marks lows.
+- **Writing:** sentence case everywhere, short labels ("Add note", not "Submit context entry"), and plain words over jargon.
+
+## Don't
+
+- No Strava-style social layer or gamification: kudos, badges, trophies, leaderboards or "don't break your streak".
+- No colour-per-category rainbow like Apple Health's.
+- No numbers without units, no charts without a time reference, and no dense dashboards with more than 5 cards before the first scroll.

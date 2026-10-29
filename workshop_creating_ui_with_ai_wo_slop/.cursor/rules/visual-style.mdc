@@ -1,0 +1,91 @@
+---
+description: Insulens visual style. Warm brand accent, semantic glucose green, Filament-inspired but not a 1:1 copy.
+alwaysApply: true
+---
+
+# Insulens visual style
+
+## Sources and priority
+
+- **Insulens first.** Build a calm diabetes product, not a Filament clone.
+- **Filament ([filamentphp.com](https://filamentphp.com))** is *inspiration* for warmth, two-weight headlines, purposeful motion and clear feature sections — not for its white outer frame or cell-rule header. Borrow ideas; change layout, shapes and decoration so the page does not read as Filament with a recolour.
+- **Perk (`docs/desing-language.md`)** still informs the parchment / ink / ash neutrals and the no-shadow flat surfaces. Its electric lime is **not** used.
+
+References (structure only, not to replicate):
+
+- `docs/references/filament-hero-full.png`
+- `docs/references/filament-feature-tiles.png`
+- `docs/references/filament-illustration.png`
+- `docs/references/filament-walkthrough.png`
+
+## Colour
+
+| Role | Value | Use |
+|------|-------|-----|
+| Brand accent (warm apricot) | `#f0a05a` | Primary pills, waitlist band, selected chips, centre Log button |
+| Range OK green | `#5fad6b` | In-range chart band, time-in-range bars, logo status dot when glucose is okay |
+| Low glucose red | `#c8321f` light / `#ff7a6b` dark | Lows only, always with icon + text |
+| Ink | `#14140f` | Headings, icons, dark fills |
+| Body / muted | `#6e6e64` / `#919183` dark | Supporting copy |
+| Canvas / tile / ash | `#ffffff` / `#f5f5eb` / `#d2d2c8` | Surfaces and rules |
+| Dark island | `#14140f` / `#30302a` | Dark band, dark cards |
+
+- Brand accent is never used as small text on white (too pale). Put it behind dark ink text.
+- Range green is **semantic**, not decoration. Do not recolour the whole brand green.
+- No second brand chromatic colour beyond apricot + the two clinical colours (range green, low red).
+
+## Logo
+
+- Wordmark `insulens` in Outfit/ink.
+- A small range-OK green status dot next to or in the mark when glucose is in range (app chrome and marketing logo).
+- When simulating low / out of range in the prototype, the status dot turns to the low-glucose red (still with text elsewhere).
+
+## Typography
+
+- **Outfit** for headings and every number (`tabular-nums`).
+- **Albert Sans** for body, nav and buttons.
+- Two-weight headlines: line 1 weight 600, soft line 2 weight 400 (can be muted).
+- Sizes as before (h1 36→48, h2 30→36, body 16, etc.). Normal letter-spacing.
+
+## Layout — dotted canvas + section boxes
+
+- Full-bleed **dotted backdrop** is the page. Do **not** wrap the site in a Filament-style white bordered column with side gutters.
+- Wide canvas (`max-w ≈ 1280px`) on the dotted backdrop — use the screen; do not crush into a tiny column.
+- Sections are **soft rounded boxes** (`.surface-box`) with gaps so the dots show between them.
+- Header: floating surface with cell rules, scrollspy active link, and a **small triangle** sitting on the bottom border of the active item (Filament cue).
+- **Feature cards** (How it works, Privacy): corner L-brackets, icon in a disc, warm apricot hover lift — Insulens icons/colours, not Filament honey or 3D stock art.
+- Hero: spacious text + live phone side by side on large screens.
+- Dark / apricot islands (doctor, waitlist) are also rounded boxes on the same dotted canvas.
+
+## Decorative SVG
+
+- **None on the landing.** Do not add floating glucose waves, drops, sensor marks or other decorative SVG accents.
+- Icons inside feature cards / UI chrome are fine (simple line icons tied to content). No stock art.
+
+## Components
+
+1. **Announcement tag:** dark chip with apricot accent glyph, e.g. "New › Doctor sharing".
+2. **Hero:** two-weight headline, lead, apricot primary pill + soft secondary, live phone and SVG accents.
+3. **Primary pill:** apricot fill, ink text, dark icon circle that expands on hover.
+4. **Secondary pill:** parchment / charcoal fill, arrow nudge on hover.
+5. **Feature cards:** rounded soft fill, simple icons (line or soft disc), no required corner brackets.
+6. **Dark band:** one per page for product/demo context.
+7. **Footer:** light, logo with status dot, links, back to top.
+
+## Motion
+
+- 200–300ms ease-out hovers. Scroll reveal once with light stagger.
+- Pause looping animation offscreen; respect `prefers-reduced-motion`.
+- CSS or Motion. No GSAP.
+
+## By surface
+
+- **Landing:** warmer, more ownable than Filament; dotted canvas + section boxes; no decorative SVG accents; soft radii.
+- **Phone app:** Apple + Strava structure (`.cursor/rules/app-style.mdc`). 28px cards. Brand apricot for primary actions; range green for in-range data and the logo status dot.
+
+## Don't
+
+- Don't clone Filament's layout chrome, honey/bubblegum colours, mascot or copy.
+- Don't invent stats, testimonials, logos or clinical claims.
+- No shadows, gradients-as-elevation, or neon lime.
+- Don't use range green for every button — keep it meaningful for "glucose okay".
