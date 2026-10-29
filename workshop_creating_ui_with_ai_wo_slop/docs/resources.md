@@ -1,0 +1,1 @@
+https://building-ui-with-ai-orc-dev.vercel.app/resources
